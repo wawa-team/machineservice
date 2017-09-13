@@ -9,6 +9,7 @@ import com.pi4j.io.gpio.*;
 public class RaspberryApi {
 
 //    final GpioController gpio = GpioFactory.getInstance();
+//    final GpioPinDigitalOutput pinCoin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01, "pinCoin", PinState.LOW);
 //    final GpioPinDigitalOutput pinUp = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02, "pinUp", PinState.LOW);
 //    final GpioPinDigitalOutput pinDown = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03, "pinDown", PinState.LOW);
 //    final GpioPinDigitalOutput pinLeft = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_04, "pinLeft", PinState.LOW);
@@ -70,6 +71,10 @@ public class RaspberryApi {
 //        pinLeft.low();
 //        pinRight.low();
 //        pinGrab.low();
+    }
+
+    public void start(){
+//        pinCoin.high();
     }
 
 //    public static void main(String[] ss){

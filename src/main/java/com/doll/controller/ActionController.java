@@ -5,6 +5,7 @@ import com.doll.util.ApiContents;
 import com.doll.util.RaspberryApi;
 import com.doll.util.Results;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.slf4j.Logger;
@@ -28,13 +29,22 @@ public class ActionController {
 
     public static RaspberryApi api = new RaspberryApi();
 
+    public static String orderId = null;
+
+    public static Long userId = null;
+
+    @Value("${machine.id}")
+    private Long machineId;
+
     @RequestMapping("/status")
     public Results status() {
         return new Results(ApiContents.NORMAL.value(), ApiContents.NORMAL.desc(), actionStatus);
     }
 
     @RequestMapping("/start")
-    public Results start() {
+    public Results start(HttpServletRequest request) {
+        orderId = request.getParameter("orderId").toString();
+        userId = Long.valueOf(request.getParameter("userId").toString());
         actionStatus.start();
         api.resetStatus();
         api.coin();
@@ -45,7 +55,7 @@ public class ActionController {
     public Results end() {
         // FIXME: 2017/9/2   这里http通知服务器结算
         Map<String, Object> map = new HashMap<>();
-        map.put("results",1);
+        map.put("results", 1);
         if (api.getDoll()) {
 
         }

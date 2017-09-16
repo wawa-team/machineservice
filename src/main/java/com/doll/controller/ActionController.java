@@ -37,6 +37,7 @@ public class ActionController {
     public Results start() {
         actionStatus.start();
         api.resetStatus();
+        api.coin();
         return new Results(ApiContents.NORMAL.value(), ApiContents.NORMAL.desc());
     }
 

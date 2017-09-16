@@ -17,6 +17,7 @@ public class RaspberryApi {
     final GpioPinDigitalOutput pinGrab = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_06, "pinGrab", PinState.LOW);
     final GpioPinDigitalInput pinDoll = gpio.provisionDigitalInputPin(RaspiPin.GPIO_27, PinPullResistance.PULL_DOWN);
 
+
     public void action(ActionStatus actionStatus) {
         if (actionStatus.getUp().equals(1)) {
             pinUp.high();

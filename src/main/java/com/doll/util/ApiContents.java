@@ -6,7 +6,8 @@ package com.doll.util;
 public enum ApiContents {
 
     NORMAL(200, "正常"),
-    PARAMS_ERROR(1001, "参数错误");
+    PARAMS_ERROR(1001, "参数错误"),
+    BACK_ORDER_ERROR(4002, "回调订单失败");
 
     private Integer value;
     private String desc;

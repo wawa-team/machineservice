@@ -1,9 +1,6 @@
 package com.doll.controller;
 
-import com.doll.util.ActionStatus;
-import com.doll.util.ApiContents;
-import com.doll.util.RaspberryApi;
-import com.doll.util.Results;
+import com.doll.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,11 +24,12 @@ public class ActionController {
 
     public static ActionStatus actionStatus = new ActionStatus();
 
-    public static RaspberryApi api = new RaspberryApi();
+    @Autowired
+    private RaspberryApi api;
 
     public static String orderId = null;
 
-    public static Long userId = null;
+    public static String token = null;
 
     @Value("${machine.id}")
     private Long machineId;
@@ -44,9 +42,9 @@ public class ActionController {
     @RequestMapping("/start")
     public Results start(HttpServletRequest request) {
         orderId = request.getParameter("orderId").toString();
-        userId = Long.valueOf(request.getParameter("userId").toString());
+        token = request.getParameter("token");
         actionStatus.start();
-        api.resetStatus();
+        api.resetStatus(orderId, token);
         api.coin();
         return new Results(ApiContents.NORMAL.value(), ApiContents.NORMAL.desc());
     }
@@ -56,9 +54,9 @@ public class ActionController {
         // FIXME: 2017/9/2   这里http通知服务器结算
         Map<String, Object> map = new HashMap<>();
         map.put("results", 1);
-        if (api.getDoll()) {
-
-        }
+//        if (api.getDoll()) {
+//
+//        }
         actionStatus.end();
         return new Results(ApiContents.NORMAL.value(), ApiContents.NORMAL.desc(), map);
     }
@@ -71,8 +69,15 @@ public class ActionController {
             return new Results(ApiContents.PARAMS_ERROR.value(), ApiContents.PARAMS_ERROR.desc());
         actionStatus.action(action);
 //        api.action(actionStatus);
-        api.action(actionStatus, time);
+        Integer re = api.action(actionStatus, time);
+        if (action.equals(ActionContents.GRAB.value()) && re.equals(1)) {
+            return new Results(ApiContents.NORMAL.value(), ApiContents.NORMAL.desc(), "get_doll");
+        }
+        if (action.equals(ActionContents.GRAB.value()) && re.equals(2)) {
+            return new Results(ApiContents.NORMAL.value(), ApiContents.NORMAL.desc(), "lose_doll");
+        }
         return new Results(ApiContents.NORMAL.value(), ApiContents.NORMAL.desc());
     }
+
 
 }

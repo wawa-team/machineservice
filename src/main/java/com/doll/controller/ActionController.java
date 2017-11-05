@@ -68,7 +68,7 @@ public class ActionController {
         if (action == null || time == null)
             return new Results(ApiContents.PARAMS_ERROR.value(), ApiContents.PARAMS_ERROR.desc());
         actionStatus.action(action);
-//        api.action(actionStatus);
+        api.action(actionStatus);
         Integer re = api.action(actionStatus, time);
         if (action.equals(ActionContents.GRAB.value()) && re.equals(1)) {
             return new Results(ApiContents.NORMAL.value(), ApiContents.NORMAL.desc(), "get_doll");

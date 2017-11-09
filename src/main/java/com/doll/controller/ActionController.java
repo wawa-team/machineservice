@@ -62,13 +62,12 @@ public class ActionController {
     }
 
     @RequestMapping("/action")
-    public Results front(HttpServletRequest request) {
+    public Results action(HttpServletRequest request) {
         Integer action = request.getParameter("action") == null ? null : Integer.valueOf(request.getParameter("action"));
         Long time = request.getParameter("time") == null ? null : Long.valueOf(request.getParameter("time"));
         if (action == null || time == null)
             return new Results(ApiContents.PARAMS_ERROR.value(), ApiContents.PARAMS_ERROR.desc());
         actionStatus.action(action);
-        api.action(actionStatus);
         Integer re = api.action(actionStatus, time);
         if (action.equals(ActionContents.GRAB.value()) && re.equals(1)) {
             return new Results(ApiContents.NORMAL.value(), ApiContents.NORMAL.desc(), "get_doll");
@@ -78,6 +77,8 @@ public class ActionController {
         }
         return new Results(ApiContents.NORMAL.value(), ApiContents.NORMAL.desc());
     }
+
+
 
 
 }

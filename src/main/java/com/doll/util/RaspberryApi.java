@@ -32,6 +32,9 @@ public class RaspberryApi {
     final GpioPinDigitalOutput pinGrab = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_06, "pinGrab", PinState.LOW);
     final GpioPinDigitalInput pinDoll = gpio.provisionDigitalInputPin(RaspiPin.GPIO_27, PinPullResistance.PULL_DOWN);
 
+
+
+
     public RaspberryApi() {
         pinDoll.setShutdownOptions(true);
 
@@ -90,30 +93,10 @@ public class RaspberryApi {
 
     public Integer action(ActionStatus actionStatus, Long time) {
         action(actionStatus);
-
-        if (actionStatus.getGrab().equals(1)) {
-            for (int i = 0; i < 9; i++) {
-                if (result.equals(3)) {
-                    result = 2;
-                    return 1;
-                } else {
-                    try {
-                        Thread.sleep(1000L);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-            result = 2;
-            orderService.callBack(token, orderId, 2);
-            return 2;
-        } else {
-            try {
-                Thread.sleep(time);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
         actionStatus.stop();
         resetStatus(orderId, token);

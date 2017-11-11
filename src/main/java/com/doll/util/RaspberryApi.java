@@ -33,8 +33,6 @@ public class RaspberryApi {
     final GpioPinDigitalInput pinDoll = gpio.provisionDigitalInputPin(RaspiPin.GPIO_27, PinPullResistance.PULL_DOWN);
 
 
-
-
     public RaspberryApi() {
         pinDoll.setShutdownOptions(true);
 
@@ -76,6 +74,19 @@ public class RaspberryApi {
         }
         if (actionStatus.getGrab().equals(1)) {
             pinGrab.high();
+            //这里通知服务器
+            new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(5000);
+                        orderService.callBack(token, orderId, 2);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }.start();
+
         } else if (actionStatus.getGrab().equals(0)) {
             pinGrab.low();
         }

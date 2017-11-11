@@ -33,7 +33,7 @@ public class OrderService {
 
     public Results callBack(String token, String orderId, Integer result) {
 
-        String url = serverIp + "?machineId=" + machineId.toString() + "&orderId=" + orderId.toString() + "&result=" + result.toString() + "&token=" + token;
+        String url = serverIp + "/order/callBack" + "?machineId=" + machineId.toString() + "&orderId=" + orderId.toString() + "&result=" + result.toString() + "&token=" + token;
         CloseableHttpClient httpclient = HttpClients.createDefault();
         HttpGet httppost = new HttpGet(url);
         try {

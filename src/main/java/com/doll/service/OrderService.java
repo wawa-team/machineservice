@@ -10,6 +10,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -31,8 +33,10 @@ public class OrderService {
     @Value("${doll.server.ip}")
     private String serverIp;
 
-    public Results callBack(String token, String orderId, Integer result) {
+    private final static Logger logger = LoggerFactory.getLogger(OrderService.class);
 
+    public Results callBack(String token, String orderId, Integer result) {
+        logger.info("========================发起支付回调========================="+orderId+"++"+result.toString());
         String url = serverIp + "/order/callBack" + "?machineId=" + machineId.toString() + "&orderId=" + orderId.toString() + "&result=" + result.toString() + "&token=" + token;
         CloseableHttpClient httpclient = HttpClients.createDefault();
         HttpGet httppost = new HttpGet(url);

@@ -36,7 +36,7 @@ public class OrderService {
     private final static Logger logger = LoggerFactory.getLogger(OrderService.class);
 
     public Results callBack(String token, String orderId, Integer result) {
-        logger.info("========================发起支付回调========================="+orderId+"++"+result.toString());
+        logger.info("========================发起游戏回调========================="+orderId+"++"+result.toString());
         String url = serverIp + "/order/callBack" + "?machineId=" + machineId.toString() + "&orderId=" + orderId.toString() + "&result=" + result.toString() + "&token=" + token;
         CloseableHttpClient httpclient = HttpClients.createDefault();
         HttpGet httppost = new HttpGet(url);
